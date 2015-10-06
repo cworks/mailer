@@ -1,0 +1,22 @@
+description 'Mailer mail that mail mail that mail'
+
+apply plugin: "java"
+apply plugin: "maven"
+apply plugin: "idea"
+
+configurations {
+    providedRuntime
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile("junit:junit:4.11")
+}
+
+task wrapper(type: Wrapper, description: 'Generates the gradle wrapper.') {
+    gradleVersion = '2.7'
+}

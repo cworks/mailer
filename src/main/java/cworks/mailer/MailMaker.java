@@ -1,5 +1,7 @@
 package cworks.mailer;
 
+import cworks.mailer.impl.MailMessage;
+
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
@@ -89,6 +91,9 @@ public class MailMaker {
     }
 
     public Mail make() {
+
+        Mail mail = new MailMessage();
+
         return null;
     }
 

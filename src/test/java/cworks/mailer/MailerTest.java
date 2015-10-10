@@ -1,50 +1,65 @@
 package cworks.mailer;
 
-import cworks.mailer.Mail;
-import cworks.mailer.Mailer;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
 
 public class MailerTest {
 
+    private static final String BUILD_ROOT = IO.USER_DIR + "/build";
+
     @Test
-    public void defaultCreate() {
-        // create from environment
-        // -----------------------
-        // mailer.properties inside jar
-        // mailer.properties outside jar in current dir or config dir
-        // os env
-        // java system properties
-        // jndi properties, java:comp/env
-        // command line args
-        Mailer mailer1 = Mailer.create();
+    public void testCreateDefault() throws IOException {
+        IO.mkDirs(IO.USER_DIR + "/config");
+        IO.writeFile(IO.USER_DIR + "/config/mailer.properties",
+                "mailer.server=smtp.config.com" + IO.NEW_LINE +
+                        "mailer.username=corbett" + IO.NEW_LINE +
+                        "mailer.password=wordup");
+        Mailer mailer = Mailer.make();
+        Assert.assertEquals(mailer.getServer(), "smtp.config.com");
+        Assert.assertEquals(mailer.getUsername(), "corbett");
+        Assert.assertEquals(mailer.getPassword(), "wordup");
+        IO.rmDirs(IO.USER_DIR + "/config");
+
+        IO.mkDirs(IO.USER_DIR + "/mailer/properties");
+        IO.writeFile(IO.USER_DIR + "/mailer/properties/mailer.properties",
+                "mailer.server=smtp.mailer.properties.com" + IO.NEW_LINE +
+                        "mailer.username=corbett" + IO.NEW_LINE +
+                        "mailer.password=toejam");
+        mailer = Mailer.make();
+        Assert.assertEquals(mailer.getServer(), "smtp.mailer.properties.com");
+        Assert.assertEquals(mailer.getUsername(), "corbett");
+        Assert.assertEquals(mailer.getPassword(), "toejam");
+        IO.rmDirs(IO.USER_DIR + "/mailer");
     }
 
-    public void mailerTest() {
+    @Test
+    public void mailerCustomConfig() throws IOException {
+        Properties props = IO.asProperties(new File("src/test/resources/mailer-test.properties"));
+        Mailer mailer = Mailer.mailer(props).make();
+        Assert.assertEquals(mailer.getServer(), "smtp.mailer-test.com");
+        Assert.assertEquals(mailer.getUsername(), "test");
+        Assert.assertEquals(mailer.getPassword(), "test123");
+    }
 
-        Mailer mailer2 = Mailer.create("smtp.gmail.com")
-            .username("me")
-            .password("al82ap0")
-            .port(25)
-            .protocol("smtp").make();
+    @Test
+    public void example() {
 
-        Mailer mailer3 = Mailer.create("smtp.gmail.com")
-            .username("corbett")
-            .password("al82ap0").make();
-
-        Mail mail1 = Mailer.create("smtp.gmail.com")
-            .username("corbett")
-            .password("al82ap0")
-            .mail("from")
-            .to("to")
+        Mail mail = Mailer.mailer()
+            .server("smtp.gmail.com")
+            .username("cworkscode@gmail.com")
+            .password("javaISCOOL123")
+            .mail("cworkscode@gmail.com")
+            .to("cworkscode@gmail.com")
             .subject("Welcome")
             .body("Welcome aboard mate!")
-            .attachment(new File("giftcard.pdf"))
+            .attachment(new File("src/test/resources/nacho_libre_poster.jpg"))
             .make();
 
-        Mailer.create();
+        mail.send();
 
-        Mailer.mail("from").to("to").body("Hello").send();
     }
 }

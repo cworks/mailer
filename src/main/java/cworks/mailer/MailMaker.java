@@ -1,8 +1,7 @@
 package cworks.mailer;
 
-import cworks.mailer.impl.MailMessage;
-
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,6 +13,18 @@ public class MailMaker {
     private List<String> bccList;
     private List<File> attachments;
     private String body;
+    private Mail mailInstance;
+    private Mailer mailer;
+
+    public MailMaker() {
+        this.mailInstance = null;
+        init();
+    }
+
+    public MailMaker(Mail mailInstance) {
+        this.mailInstance = mailInstance;
+        init();
+    }
 
     public MailMaker from(String from) {
         this.from = from;
@@ -90,23 +101,60 @@ public class MailMaker {
         return this;
     }
 
+    public void mailer(Mailer mailer) {
+        this.mailer = mailer;
+    }
+
+    /**
+     * MailMaker make that Mail, make that Mail, make that Mail.
+     * @return
+     */
     public Mail make() {
 
-        Mail mail = new MailMessage();
+        MailerMail mail = null;
+        if(mailInstance != null) {
+            mail = new MailerMail(mailInstance);
+        } else {
+            mail = new MailerMail();
+        }
 
-        return null;
+        if(mailer.getUser() != null) {
+            mail.setFrom(mailer.getUser());
+        }
+        if(this.from != null) {
+            mail.setFrom(this.from);
+        }
+
+        if(this.toList.size() == 0 || mail.getFrom() == null) {
+            return new NullMail();
+        }
+
+        mail.setToList(toList);
+        mail.setCcList(ccList);
+        mail.setBccList(bccList);
+        mail.setSubject(subject);
+        mail.setBody(body);
+        mail.setAttachments(attachments);
+        mail.setMailer(mailer);
+
+        return mail;
     }
 
     public void send() {
-
+        Mail mail = make();
+        this.mailer.send(mail);
     }
 
-    public void send(Mail mail) {
-
+    public void send(MailerCallback callback) {
+        Mail mail = make();
+        this.mailer.send(mail, callback);
     }
 
-    public void send(final SendListener listener) {
-
+    private void init() {
+        this.toList = new ArrayList<>();
+        this.ccList = new ArrayList<>();
+        this.bccList = new ArrayList<>();
+        this.attachments = new ArrayList<>();
     }
 
 }

@@ -1,2 +1,2 @@
-README for mailer
-=========================
+Java Mailer that mails mail
+---------------------------

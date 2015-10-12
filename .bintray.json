@@ -1,0 +1,26 @@
+{
+  "package": {
+    "name": "mailer",    // Bintray package name
+    "repo": "maven",     // Bintray repository name
+    "subject": "cworks", // Bintray subject (user or organization)
+    "desc": "I was pushed completely automatically",
+    "website_url": "www.corbettworks.net",
+    "issue_tracker_url": "https://github.com/cworks/mailer/issues",
+    "vcs_url": "https://github.com/cworks/mailer.git",
+    "licenses": ["MIT"],
+    "labels": ["java", "email"],
+    "public_download_numbers": false,
+    "public_stats": false
+  },
+  "version": {
+    "name": "1.0"
+  },
+  "files":
+  [
+    {
+      "includePattern": "build/libs/mailer-1.0.jar",
+      "uploadPattern": "cworks/mailer/1.0"
+    }
+  ],
+  "publish": true
+}

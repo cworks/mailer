@@ -1,8 +1,9 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 deploy:
   provider: bintray
-  file: ".bintray.json"
-  user: "cworks"
-  key: "72cf075e972740e6bb52d7b4cb01a67f040ceb2c"
+  file: .bintray.json
+  user: cworks
+  key:
+    secure: JqUakf4FnobmbyIgMVIDwle+VtHWnEY5P9ArbVjMwrjlNoS0StY2MFAHaBhOJia7c3HtQ/mSUNUP1dyIowJPiCrfthxDdRVRD7QOvtwJan6n8JEGyxclscx9zn3Wrs/Dkz7r8PS8XDI6smyRFJzDy8+CQ53OmVIWuD5Skbcg2CVKOv6B4U2MS/rLuTSmCa5/YpvwF16qQI5W8zbqPo/ciC5OwhLpDwd30Q/h2IZBNOQLLU6rid3v3t6rXRvyyldkN8YexxYyWwk2jqBrad/4HfxE5BngSygv1ZTKpmUlV6keZVH5nipwge2f/EiI+2JEQ/7bTcBKdUaxLq9gba6lN5KEachGqpoSqa76U5RCG45G1OTCXjDwPXLZupMQWwGhtYs6X6Y7XVLw0nWIsspcZNLR0DsJafl8kEp1gKbA26bRfwHK795Y+DwIxzr1UJn6UxZtPkZswfXi+H6lESr1RiXmuA/ei9qg4dFKR2yUZgc4PlJX9ACeZkDpBETBcrZg7PISR/5Btxe9s0pVJ9ASB2YZCTJ+XG9s2yMmZD4Z+yt1ywqYkhKJlxYbOxblGO9sJfcG4vXwGOs66aYZZqW11vvxmEFMB23rTQYXbIeBtfebRKW4Bltg4jGSoYPmtW5C0SvvLlDFUbmh/RYM1bKnfLserJY5fRXbXuBpm/UBcb0=

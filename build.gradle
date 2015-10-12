@@ -18,6 +18,14 @@ dependencies {
     testCompile("junit:junit:4.11")
 }
 
+task createPom << {
+    pom {
+        project {
+            inceptionYear '2015'
+        }
+    }.writeTo("$buildDir/libs/${project.name}-${version}.pom")
+}
+
 task wrapper(type: Wrapper, description: 'Generates the gradle wrapper.') {
     gradleVersion = '2.7'
 }

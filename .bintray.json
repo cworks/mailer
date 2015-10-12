@@ -19,7 +19,7 @@
   [
     {
       "includePattern": "build/libs/mailer-1.0.jar",
-      "uploadPattern": "cworks/mailer/1.0"
+      "uploadPattern": "cworks/mailer/1.0/mailer-1.0.jar"
     }
   ],
   "publish": true

@@ -1,4 +1,12 @@
-description 'Mailer mail that mail mail that mail'
+buildscript {
+	repositories {
+		jcenter()
+	}
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.4"
+}
 
 apply plugin: "java"
 apply plugin: "maven"
@@ -16,6 +24,31 @@ repositories {
 dependencies {
     compile("javax.mail:mail:1.4.7")
     testCompile("junit:junit:4.11")
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ?
+        project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ?
+        project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    configurations = ['archives']
+    publish = true
+    dryRun = false
+    pkg {
+      	repo = 'maven'
+      	name = 'mailer'
+        desc = 'Mailer mail that mail'
+        websiteUrl = 'https://github.com/cworks/mailer'
+        issueTrackerUrl = 'https://github.com/cworks/mailer/issues'
+        vcsUrl = 'https://github.com/cworks/mailer.git'
+        licenses = ['MIT']
+        labels = ['Java', 'Email']
+      	userOrg = user
+      	version {
+      		  name = project.version
+      		  desc = 'Mailer mail that mail'
+      	}
+    }
 }
 
 task createPom << {
